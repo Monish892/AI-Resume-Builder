@@ -1,4 +1,5 @@
 import { Resume } from '../../types';
+import { Linkedin, Globe, Github } from 'lucide-react';
 
 interface TemplateProps {
   resume: Resume;
@@ -17,19 +18,51 @@ export default function MinimalistTemplate({ resume }: TemplateProps) {
 
   return (
     <div className="bg-white p-8 shadow-lg" style={{ width: '210mm', minHeight: '297mm' }}>
-      <div className="mb-8">
-        <h1 className="text-5xl font-light text-gray-900 mb-3">{personalInfo.fullName || 'Your Name'}</h1>
-        <div className="flex flex-wrap gap-3 text-xs text-gray-600 uppercase tracking-wider">
-          {personalInfo.email && <span>{personalInfo.email}</span>}
-          {personalInfo.phone && <span>{personalInfo.phone}</span>}
-          {personalInfo.location && <span>{personalInfo.location}</span>}
-        </div>
-        {(personalInfo.linkedin || personalInfo.website) && (
-          <div className="flex flex-wrap gap-3 text-xs text-gray-600 mt-1">
-            {personalInfo.linkedin && <span>{personalInfo.linkedin}</span>}
-            {personalInfo.website && <span>{personalInfo.website}</span>}
-          </div>
+      <div className="mb-8 flex items-center gap-6">
+        {/* Profile Photo */}
+        {personalInfo.photo && (
+          <img
+            src={personalInfo.photo}
+            alt="Profile"
+            style={{ width: 70, height: 70, borderRadius: '50%', objectFit: 'cover', border: '1px solid #e5e7eb' }}
+          />
         )}
+        <div>
+          <h1 className="text-5xl font-light text-gray-900 mb-3">{personalInfo.fullName || 'Your Name'}</h1>
+          <div className="flex flex-wrap gap-3 text-xs text-gray-600 uppercase tracking-wider">
+            {personalInfo.email && <span>{personalInfo.email}</span>}
+            {personalInfo.phone && <span>{personalInfo.phone}</span>}
+            {personalInfo.location && <span>{personalInfo.location}</span>}
+          </div>
+          {(personalInfo.linkedin || personalInfo.github || personalInfo.website) && (
+            <div className="flex flex-wrap gap-3 text-xs text-gray-600 mt-1 items-center">
+              {personalInfo.linkedin && (
+                <span className="flex items-center gap-1">
+                  <Linkedin size={14} />
+                  <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="underline">
+                    LinkedIn
+                  </a>
+                </span>
+              )}
+              {personalInfo.github && (
+                <span className="flex items-center gap-1">
+                  <Github size={14} />
+                  <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="underline">
+                    GitHub
+                  </a>
+                </span>
+              )}
+              {personalInfo.website && (
+                <span className="flex items-center gap-1">
+                  <Globe size={14} />
+                  <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="underline">
+                    Website
+                  </a>
+                </span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {personalInfo.summary && (

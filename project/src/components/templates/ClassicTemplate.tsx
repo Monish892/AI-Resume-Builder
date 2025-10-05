@@ -1,4 +1,5 @@
 import { Resume } from '../../types';
+import { Linkedin, Globe, Github } from 'lucide-react';
 
 interface TemplateProps {
   resume: Resume;
@@ -17,18 +18,46 @@ export default function ClassicTemplate({ resume }: TemplateProps) {
 
   return (
     <div className="bg-white p-8 shadow-lg" style={{ width: '210mm', minHeight: '297mm' }}>
-      <div className="text-center mb-6 pb-4 border-b-2 border-gray-800">
+      <div className="text-center mb-6 pb-4 border-b-2 border-gray-800 flex flex-col items-center">
+        {/* Profile Photo */}
+        {personalInfo.photo && (
+          <img
+            src={personalInfo.photo}
+            alt="Profile"
+            style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid #333', marginBottom: 12 }}
+          />
+        )}
         <h1 className="text-3xl font-bold text-gray-900 mb-2">{personalInfo.fullName || 'Your Name'}</h1>
-        <div className="text-sm text-gray-700">
-          {[
-            personalInfo.email,
-            personalInfo.phone,
-            personalInfo.location,
-            personalInfo.linkedin,
-            personalInfo.website,
-          ]
-            .filter(Boolean)
-            .join(' • ')}
+        <div className="text-sm text-gray-700 flex flex-wrap justify-center gap-3 mb-2">
+          {personalInfo.email && <span>{personalInfo.email}</span>}
+          {personalInfo.phone && <span>{personalInfo.phone}</span>}
+          {personalInfo.location && <span>{personalInfo.location}</span>}
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-700">
+          {personalInfo.linkedin && (
+            <span className="flex items-center gap-1">
+              <Linkedin size={14} />
+              <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="underline">
+                LinkedIn
+              </a>
+            </span>
+          )}
+          {personalInfo.github && (
+            <span className="flex items-center gap-1">
+              <Github size={14} />
+              <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="underline">
+                GitHub
+              </a>
+            </span>
+          )}
+          {personalInfo.website && (
+            <span className="flex items-center gap-1">
+              <Globe size={14} />
+              <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="underline">
+                Website
+              </a>
+            </span>
+          )}
         </div>
       </div>
 

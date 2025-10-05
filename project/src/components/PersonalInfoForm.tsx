@@ -1,4 +1,5 @@
 import { PersonalInfo } from '../types';
+import { useRef } from 'react';
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;
@@ -6,8 +7,21 @@ interface PersonalInfoFormProps {
 }
 
 export default function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleChange = (field: keyof PersonalInfo, value: string) => {
     onChange({ ...data, [field]: value });
+  };
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        handleChange('photo', reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -82,6 +96,19 @@ export default function PersonalInfoForm({ data, onChange }: PersonalInfoFormPro
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
+            GitHub
+          </label>
+          <input
+            type="url"
+            value={data.github || ''}
+            onChange={(e) => handleChange('github', e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="github.com/johndoe"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Website
           </label>
           <input
@@ -91,6 +118,27 @@ export default function PersonalInfoForm({ data, onChange }: PersonalInfoFormPro
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="johndoe.com"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Upload Photo
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handlePhotoUpload}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+          />
+          {data.photo && (
+            <img
+              src={data.photo}
+              alt="Profile"
+              className="mt-2 rounded-full"
+              style={{ width: 80, height: 80, objectFit: 'cover' }}
+            />
+          )}
         </div>
       </div>
 

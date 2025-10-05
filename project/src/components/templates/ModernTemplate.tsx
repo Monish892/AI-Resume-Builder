@@ -1,5 +1,5 @@
 import { Resume } from '../../types';
-import { Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Globe, Github } from 'lucide-react';
 
 interface TemplateProps {
   resume: Resume;
@@ -18,39 +18,62 @@ export default function ModernTemplate({ resume }: TemplateProps) {
 
   return (
     <div className="bg-white p-8 shadow-lg" style={{ width: '210mm', minHeight: '297mm' }}>
-      <div className="border-l-4 border-blue-600 pl-6 mb-6">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">{personalInfo.fullName || 'Your Name'}</h1>
-        <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-          {personalInfo.email && (
-            <div className="flex items-center gap-1">
-              <Mail size={14} />
-              <span>{personalInfo.email}</span>
-            </div>
-          )}
-          {personalInfo.phone && (
-            <div className="flex items-center gap-1">
-              <Phone size={14} />
-              <span>{personalInfo.phone}</span>
-            </div>
-          )}
-          {personalInfo.location && (
-            <div className="flex items-center gap-1">
-              <MapPin size={14} />
-              <span>{personalInfo.location}</span>
-            </div>
-          )}
-          {personalInfo.linkedin && (
-            <div className="flex items-center gap-1">
-              <Linkedin size={14} />
-              <span>{personalInfo.linkedin}</span>
-            </div>
-          )}
-          {personalInfo.website && (
-            <div className="flex items-center gap-1">
-              <Globe size={14} />
-              <span>{personalInfo.website}</span>
-            </div>
-          )}
+      <div className="flex items-center border-l-4 border-blue-600 pl-6 mb-6">
+        {/* Profile Photo */}
+        {personalInfo.photo && (
+          <img
+            src={personalInfo.photo}
+            alt="Profile"
+            className="mr-6"
+            style={{ width: 80, height: 80, borderRadius: '50%', objectFit: 'cover', border: '2px solid #2563eb' }}
+          />
+        )}
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">{personalInfo.fullName || 'Your Name'}</h1>
+          <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+            {personalInfo.email && (
+              <div className="flex items-center gap-1">
+                <Mail size={14} />
+                <span>{personalInfo.email}</span>
+              </div>
+            )}
+            {personalInfo.phone && (
+              <div className="flex items-center gap-1">
+                <Phone size={14} />
+                <span>{personalInfo.phone}</span>
+              </div>
+            )}
+            {personalInfo.location && (
+              <div className="flex items-center gap-1">
+                <MapPin size={14} />
+                <span>{personalInfo.location}</span>
+              </div>
+            )}
+            {personalInfo.linkedin && (
+              <div className="flex items-center gap-1">
+                <Linkedin size={14} />
+                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="underline">
+                  LinkedIn
+                </a>
+              </div>
+            )}
+            {personalInfo.github && (
+              <div className="flex items-center gap-1">
+                <Github size={14} />
+                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="underline">
+                  GitHub
+                </a>
+              </div>
+            )}
+            {personalInfo.website && (
+              <div className="flex items-center gap-1">
+                <Globe size={14} />
+                <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="underline">
+                  Website
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
